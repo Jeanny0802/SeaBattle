@@ -27,11 +27,11 @@ class Dot:
 
 
 class Ship:
-    def __init__(self, bow, l, o, lives):
+    def __init__(self, bow, l, o):
         self.bow = bow
         self.l = l
         self.o = o
-        self.lives = lives
+        self.lives = l
 
     @property
     def dots(self):
@@ -61,7 +61,7 @@ class Board:
 
         self.count = 0
 
-        self.field = [["0"] * size for _ in range(size)]
+        self.field = [ ["O"] * size for _ in range(size) ]
 
         self.busy =[]
         self.ship =[]
@@ -73,7 +73,7 @@ class Board:
             res += f"\n{i+1} | " + " | ".join(row) + "  |"
 
         if self.hid:
-            res = res.replace("chr(9605", "0")
+            res = res.replace("■", "0")
         return res
 
     def out(self, d):
@@ -87,7 +87,7 @@ class Board:
         ]
         for d in ship.dots:
             for dx, dy in near:
-                cur = Dot(d.x + dx, d.y +dy)
+                cur = Dot(d.x + dx, d.y + dy)
                 if not(self.out(cur)) and cur not in self.busy:
                     if verb:
                         self.field[cur.x][cur.y] = "."
@@ -98,7 +98,7 @@ class Board:
             if self.out(d) or d in self.busy:
                 raise BoardWrongShipException()
         for d in ship.dots:
-            self.field[d.x][d.y] = "chr(9605)"
+            self.field[d.x][d.y] = "■"
             self.busy.append(d)
 
         self.ships.append(ship)
@@ -119,7 +119,7 @@ class Board:
                 self.field[d.x][d.y] = "X"
                 if ship.lives == 0:
                     self.count += 1
-                    self.contour(ship, verb=True)
+                    self.contour(ship, verb = True)
                     print("Корабль уничтожен!")
                     return False
                 else:
