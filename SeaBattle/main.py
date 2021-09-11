@@ -64,7 +64,7 @@ class Board:
         self.field = [ ["O"] * size for _ in range(size) ]
 
         self.busy =[]
-        self.ship =[]
+        self.ships =[]
 
     def __str__(self):
         res = ""
@@ -213,7 +213,7 @@ class Game:
             board = self.try_board()
         return board
 
-    def Greet(self):
+    def greet(self):
         print("___________________")
         print("  Приветствуем Вас ")
         print("      в игре       ")
@@ -263,7 +263,8 @@ class Game:
         self.greet()
         self.loop()
 
-
+obj = Game()
+obj.start()
 
 
 
